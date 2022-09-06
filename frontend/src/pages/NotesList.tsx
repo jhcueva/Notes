@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from "react-router-dom"
+
 import { ListItem } from '../components/ListItem'
 
-export const NodesList = () => {
+export const NotesList = () => {
   const [notes, setNotes] = useState([])
 
   useEffect(() => {
@@ -9,9 +11,8 @@ export const NodesList = () => {
   }, [])
 
   const getNodes = async () => {
-    const response = await fetch('http://127.0.0.1:8000/api/notes/')
+    const response = await fetch('/api/notes/')
     const data = await response.json()
-    console.log(data)
     setNotes(data)
   }
 
