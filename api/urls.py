@@ -5,5 +5,7 @@ from . import views
 urlpatterns = [
     path('', view=views.getRoutes, name='routes'),
     path('notes/', view=views.getNotes, name='notes'),
-    path('notes/<str:pk>/', view=views.getNote, name='note')
+    path('notes/<str:pk>/update/', view=views.updateNote, name='update-note'),
+    
+    path('notes/<str:pk>/', view=views.getNote, name='note'),
 ]

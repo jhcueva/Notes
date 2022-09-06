@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from "react-router-dom"
 
 import { ListItem } from '../components/ListItem'
 
@@ -17,7 +16,8 @@ export const NotesList = () => {
   }
 
   return (
-    <section className='nodeList'>
+    <section className='nodeList flex flex-col gap-4 py-4 mx-3'>
+      <h2 className='text-3xl font-medium'>Note List</h2>
       {notes.map((note, index) => (
         <ListItem key={index} note={note} />
       ))}
