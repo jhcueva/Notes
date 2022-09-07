@@ -1,20 +1,21 @@
 import React from 'react'
 import { Link } from "react-router-dom"
+import { NoteInterface } from '../types'
 
-const getTitle = (note) => {
+const getTitle = (note: NoteInterface) => {
   let title = note.body.split('\n')[0]
   if (title.length > 45) {
-    return title.splice(0, 45)
+    return title.slice(0, 45)
   }
 
   return title
 }
 
-const getTime = (note) => {
+const getTime = (note: NoteInterface) => {
   return new Date(note.updated).toLocaleDateString()
 }
 
-const getContent = (note) => {
+const getContent = (note: NoteInterface) => {
   const title = getTitle(note)
   let content = note.body.replaceAll('\n', ' ')
   content = content.replaceAll(title, '');
@@ -27,7 +28,7 @@ const getContent = (note) => {
 }
 
 
-export const ListItem = ({ note }) => {
+export const ListItem = ({ note }:{note: NoteInterface}) => {
   return (
     <section className='note flex items-center p-4 text-gray-500 bg-white rounded-md shadow'>
       <Link to={`/note/${note.id}`}>

@@ -18,7 +18,7 @@
   },
   "include": ["src"],
   "files": [
-    "custom.d.ts"
+    "./src/custom.d.ts"
   ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

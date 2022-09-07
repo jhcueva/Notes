@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import {useParams, useNavigate} from "react-router-dom"
+import { NoteInterface } from '../types'
 
 
 import { ReactComponent as  BackIcon} from '../assets/back-icon.svg'
@@ -7,14 +8,21 @@ import { ReactComponent as DeleteIcon } from '../assets/delete-icon.svg'
 import { ReactComponent as DoneIcon } from '../assets/check-icon.svg'
 
 
+const Note: NoteInterface = {
+  id: 0,
+  body: "",
+  updated: new Date,
+  created: new Date,
+}
+
 export const NotePage = () => {
 
   const { id } = useParams()
   const navigate = useNavigate()
 
-  const [note, setNote] = useState([])
+  const [note, setNote] = useState(Note)
 
-  const handleChange = (event) => {
+  const handleChange = (event : React.ChangeEvent<HTMLTextAreaElement>) => {
     setNote(note => ({ ...note, body:event.target.value}))
   }
 
@@ -84,7 +92,7 @@ export const NotePage = () => {
         </section>
         <textarea 
           className='w-full min-h-min max-h-5/6 h-auto my-3 p-4 outline-none border-none overflow-hidden rounded-md shadow'
-          value={note?.body}
+          defaultValue={note?.body}
           onChange={handleChange}
           >
         </textarea>
