@@ -8,6 +8,7 @@ from .models import Note
 
 # Serializers
 from .serializers import NoteSerializer
+from api import serializers
 
 
 @api_view(['GET'])
@@ -64,6 +65,16 @@ def getNote(request, pk):
 
     return Response(serializer.data)
 
+@api_view(['POST'])
+def createNote(request):
+    data = request.data
+    note = Note.objects.create(
+        body=data['body']
+        )
+    serializers = NoteSerializer(note, many=True)
+    
+    return Response(serializers.data)
+
 
 @api_view(['PUT'])
 def updateNote(request, pk):
@@ -87,3 +98,4 @@ def deleteNote(request, pk):
     note.delete()
     
     return Response('Note was deleted')
+

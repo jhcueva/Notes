@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 
 import { ListItem } from '../components/ListItem'
+import { AddBtn } from '../components/AddBtn'
+
 
 export const NotesList = () => {
   const [notes, setNotes] = useState([])
@@ -21,6 +23,7 @@ export const NotesList = () => {
       {notes.map((note, index) => (
         <ListItem key={index} note={note} />
       ))}
+      <AddBtn />
     </section>
   )
 }
