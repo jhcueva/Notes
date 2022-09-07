@@ -15,10 +15,7 @@ export const NotePage = () => {
   const [note, setNote] = useState([])
 
   const handleChange = (event) => {
-    setNote({
-      ...note,
-      'body': event.target.value
-    })
+    setNote(note => ({ ...note, body:event.target.value}))
   }
 
   const handleClick = () => {
@@ -26,7 +23,7 @@ export const NotePage = () => {
       deleteNote()
     } else if (id !== 'new'){
       updateNote()
-    } else if (id === 'new' && note !== null) {
+    } else if (id === 'new' && note.body !== null) {
       createNote()
     }
     navigate('/')
@@ -76,22 +73,23 @@ export const NotePage = () => {
   }
 
   return (
-    <div className='my-4 mx-3'>
-      <section className='flex justify-between'>
-        <BackIcon onClick={handleClick} className='w-6 h-6 cursor-pointer'/>
-        {id !== 'new' 
-          ? <DeleteIcon onClick={deleteNote} className='w-6 h-6 hover:text-[#D11A2A] transition-colors cursor-pointer'/>
-          : <DoneIcon onClick={handleClick} className='w-6 h-6'/>
-        }
-      </section>
-      <article className='flex items-center p-4 my-3 text-black-500 bg-white rounded-md shadow'>
+    <div className='container h-screen mx-auto py-4'>
+      <section className='notePage h-full flex flex-col px-3'>
+        <section className='flex justify-between'>
+          <BackIcon onClick={handleClick} className='w-6 h-6 cursor-pointer'/>
+          {id !== 'new' 
+            ? <DeleteIcon onClick={deleteNote} className='w-6 h-6 hover:text-[#D11A2A] transition-colors cursor-pointer'/>
+            : <DoneIcon onClick={handleClick} className='w-6 h-6'/>
+          }
+        </section>
         <textarea 
-          className='w-full'
-          defaultValue={note?.body}
+          className='w-full min-h-min max-h-5/6 h-auto my-3 p-4 outline-none border-none overflow-hidden rounded-md shadow'
+          value={note?.body}
           onChange={handleChange}
           >
         </textarea>
-      </article>
+
+      </section>
     </div>
   )
 }

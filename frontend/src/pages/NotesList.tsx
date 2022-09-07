@@ -18,7 +18,7 @@ export const NotesList = () => {
   }
 
   return (
-    <section className='nodeList flex flex-col gap-4 py-4 mx-3'>
+    <section className='nodeList relative h-full flex flex-col gap-4 py-4 px-3 bg-slate-50'>
       <h2 className='text-3xl font-medium'>Note List</h2>
       {notes.map((note, index) => (
         <ListItem key={index} note={note} />
