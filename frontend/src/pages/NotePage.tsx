@@ -87,7 +87,7 @@ export const NotePage = () => {
           <BackIcon onClick={handleClick} className='w-6 h-6 cursor-pointer'/>
           {id !== 'new' 
             ? <DeleteIcon onClick={deleteNote} className='w-6 h-6 hover:text-[#D11A2A] transition-colors cursor-pointer'/>
-            : <DoneIcon onClick={handleClick} className='w-6 h-6'/>
+            : <DoneIcon onClick={handleClick} className='w-6 h-6 cursor-pointer'/>
           } 
         </section>
         <textarea 
