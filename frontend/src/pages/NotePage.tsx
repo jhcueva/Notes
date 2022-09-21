@@ -3,7 +3,7 @@ import {useParams, useNavigate} from "react-router-dom"
 import { NoteInterface } from '../types'
 
 
-import { ReactComponent as  BackIcon} from '../assets/back-icon.svg'
+import { ReactComponent as BackIcon } from '../assets/back-icon.svg'
 import { ReactComponent as DeleteIcon } from '../assets/delete-icon.svg'
 import { ReactComponent as DoneIcon } from '../assets/check-icon.svg'
 
@@ -88,7 +88,7 @@ export const NotePage = () => {
           {id !== 'new' 
             ? <DeleteIcon onClick={deleteNote} className='w-6 h-6 hover:text-[#D11A2A] transition-colors cursor-pointer'/>
             : <DoneIcon onClick={handleClick} className='w-6 h-6'/>
-          }
+          } 
         </section>
         <textarea 
           className='w-full min-h-min max-h-5/6 h-auto my-3 p-4 outline-none border-none overflow-hidden rounded-md shadow'

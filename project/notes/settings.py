@@ -14,20 +14,29 @@ import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-FRONTEND_DIR = os.path.join(BASE_DIR, 'frontend')
-TEMPLATE_DIR = os.path.join(FRONTEND_DIR, 'dist')
+CURRENT_DIR = os.path.dirname(os.getcwd())
+BASE_DIR = Path(CURRENT_DIR).resolve().parent
+TEMPLATE_DIR = os.path.join(CURRENT_DIR, 'dist')
+print('--'*20)
+print(os.listdir(TEMPLATE_DIR))
+print('--'*20)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-%v@@lt!vue200w^mq)c_*eeni%o1)ash7o59jzv26#p8wu439@'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS.extend(
+    filter(
+        None,
+        os.environ.get('ALLOWED_HOSTS', '').split(','),
+    )
+)
 
 
 # Application definition
@@ -100,8 +109,11 @@ WSGI_APPLICATION = 'notes.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'HOST': os.environ.get('DB_HOST'),
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASS')
     }
 }
 
