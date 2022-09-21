@@ -23,7 +23,7 @@ Build frontend for production, make sure to be in frontend folder
 
 ## Run with docker
 
-Make sure to be in the roo folder
+Make sure to be in the root folder
 
 Build docker image
 
