@@ -1,3 +1,5 @@
+# NotesApp build with Django + React + Docker
+
 ## For local development
 
 Install requirements, make sure to be in project folder
