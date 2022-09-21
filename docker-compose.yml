@@ -1,0 +1,66 @@
+version: '3.6'
+
+volumes:
+  shared:
+    driver: local
+    driver_opts:
+      type: "tmpfs"
+      device: "tmpfs"
+      o: "size=256m,uid=1000"
+
+services:
+  redis:
+    restart: always
+    image: redis:5
+
+
+  db:
+    restart: always
+    image: postgres:13-alpine
+    environment:
+      - POSTGRES_DB=devdb
+      - POSTGRES_USER=devuser
+      - POSTGRES_PASSWORD=changeme
+
+  frontend:
+    # restart: always
+    build:
+      context: ./frontend/
+      dockerfile: Dockerfile
+    command: >
+      sh -c "npm run build && 
+             npm run dev"
+    stdin_open: true
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend/src:/app/frontend/src
+      - shared:/app/frontend/dist
+
+  project:
+    restart: always
+    build:
+      context: ./project/
+      dockerfile: Dockerfile
+    command: >
+      sh -c "python manage.py wait_for_db &&
+             python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - 8000:8000
+    volumes:
+      - ./project/notes:/app/api/notes
+      - shared:/app/dist
+    environment:
+      - SECRET_KEY=devsecretkey
+      - DEBUG=1
+      - DB_HOST=db
+      - DB_NAME=devdb
+      - DB_USER=devuser
+      - DB_PASS=changeme
+    depends_on:
+      - db
+      - redis
+      - frontend
+
+
