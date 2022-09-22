@@ -1,28 +1,16 @@
-import React, { useEffect, useState } from 'react'
-
-import { ListItem } from '../components/ListItem'
 import { AddBtn } from '../components/AddBtn'
+import {NotesInterface} from '../types'
 
+interface NoteListProps {
+  notes: NotesInterface[]
+  children?: (note) => JSX.Element
+}
 
-export const NotesList = () => {
-  const [notes, setNotes] = useState([])
-
-  useEffect(() => {
-    getNodes()
-  }, [])
-
-  const getNodes = async () => {
-    const response = await fetch('/api/notes/')
-    const data = await response.json()
-    setNotes(data)
-  }
-
+export const NotesList = (props: NoteListProps) => {
   return (
     <section className='nodeList relative h-full flex flex-col gap-4 py-4 px-3 bg-slate-50'>
       <h2 className='text-3xl font-medium'>Note List</h2>
-      {notes.map((note, index) => (
-        <ListItem key={index} note={note} />
-      ))}
+      {props.notes.map(props.children)}
       <AddBtn />
     </section>
   )

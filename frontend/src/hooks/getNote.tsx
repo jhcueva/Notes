@@ -1,26 +1,14 @@
-import { NoteInterface } from '../types'
-
-export const getTitle = (note: NoteInterface) => {
-  let title = note.body.split('\n')[0]
-  if (title.length > 45) {
-    return title.slice(0, 45)
-  }
-
-  return title
+export const getNotes = async () => {
+  const response = await fetch('/api/notes/')
+  const data = await response.json()
+  return data
 }
 
-export const getTime = (note: NoteInterface) => {
-  return new Date(note.updated).toLocaleDateString()
-}
+export const getNote = async (id) => {
+  if (id === 'new') return
 
-export const getContent = (note: NoteInterface) => {
-  const title = getTitle(note)
-  let content = note.body.replaceAll('\n', ' ')
-  content = content.replaceAll(title, '');
+  const response = await fetch(`/api/notes/${id}/`)
+  const data = await response.json()
 
-  if (content.length > 45) {
-    return content.slice(0, 45) + '...'
-  } else {
-    return content ;
-  }
+  return (data)
 }
