@@ -17,7 +17,7 @@ export const Home = () => {
 
   const handleDelete = (id) => {
     setOnDeleteNote(id)
-    setSelectedNote(-1)
+    setSelectedNote(undefined)
   }
 
   useEffect(() => {
@@ -56,7 +56,7 @@ export const Home = () => {
           )}
         </NotesList>
       </div>
-      <div className='notesDetail w-full h-screen bg-red-700 rounded-r-md hidden lg:col-span-9 lg:block lg:h-5/6'>
+      <div className='notesDetail w-full h-screen bg-slate-100 rounded-r-md hidden lg:col-span-9 lg:block lg:h-5/6'>
         <Note
           id={selectedNote}
           onDeleteNote={(id) => handleDelete(id)}

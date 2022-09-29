@@ -4,11 +4,11 @@ export const getNotes = async () => {
   return data
 }
 
-export const getNote = async (id) => {
-  if (id === 'new') return
+export const getNote = async (id: number) => {
+  if (typeof id == 'number') {
+    const response = await fetch(`/api/notes/${id}/`)
+    const data = await response.json()
+    return (data)
+  }
 
-  const response = await fetch(`/api/notes/${id}/`)
-  const data = await response.json()
-
-  return (data)
 }

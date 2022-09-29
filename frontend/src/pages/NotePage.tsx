@@ -26,6 +26,12 @@ export const NotePage = () => {
     setNote(note => ({ ...note, body:event.target.value}))
   }
 
+  const handleKey = (event) => {
+    if (event.key === 'Enter') {
+      handleClick()
+    }
+  }
+
   const handleClick = () => {
     if (id !== 'new' && note.body === '') {
       deleteNote()
@@ -92,8 +98,10 @@ export const NotePage = () => {
         </section>
         <textarea 
           className='w-full min-h-min max-h-5/6 h-auto my-3 p-4 outline-none border-none overflow-hidden rounded-md shadow'
+          autoFocus
           defaultValue={note?.body}
           onChange={handleChange}
+          onKeyDown={handleKey}
           >
         </textarea>
 
