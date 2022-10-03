@@ -27,13 +27,19 @@ export const ListItem = ({ id, body, updated, selectedNote }: ListItemProps) => 
   }, []);
 
   return (
-    <section className='note flex flex-col p-4 text-gray-500 bg-white rounded-md shadow' onClick={handleClick}>
-      {
-        !matches
-          ? <LinkItem id={id} title={getTitle(body)} content={getContent(body)} date={getTime(updated)} />
-          : <Item id={id} title={getTitle(body)} content={getContent(body)} date={getTime(updated)}/>
-      }
-    </section>
+    <>
+      <section className='note flex flex-col p-4 text-gray-500 bg-white rounded-md shadow' onClick={handleClick}>
+        {
+          !matches
+            ? <LinkItem id={id} title={getTitle(body)} content={getContent(body)} date={getTime(updated)} />
+            : <Item id={id} title={getTitle(body)} content={getContent(body)} date={getTime(updated)}/>
+        }
+      </section>
+      {/* <section className='flex flex-col p-4 text-gray-500 bg-white rounded-md shadow animate-pulse'>
+        <div className='h-3 rounded-full w-3/4 mb-3 bg-gray-200'></div>
+        <div className='h-2.5 rounded-full max-w-[82px] bg-gray-200'></div>
+      </section> */}
+    </>
     
   )
 }
