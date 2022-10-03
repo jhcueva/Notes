@@ -7,8 +7,8 @@ import {getNote} from '../hooks/getNote'
 import NoteBook from './diary.png'
 
 interface NoteProps {
-  id: number;
-  onDeleteNote: (id: number) => number
+  id: number | undefined;
+  onDeleteNote: (id: number) => void
 }
 
 const expectedNote: NotesInterface ={
@@ -23,7 +23,7 @@ export const Note = ({ id, onDeleteNote }: NoteProps) => {
   const [note, setNote] = useState<NotesInterface>(expectedNote)
 
   const handleDelete = () => {
-    onDeleteNote(id)
+    onDeleteNote(id as number)
   }
 
   useEffect(() => {
@@ -58,8 +58,9 @@ export const Note = ({ id, onDeleteNote }: NoteProps) => {
               }
             </section>
             <textarea
+              key={note.body}
               className={`w-full min-h-min max-h-5/6 h-auto my-3 p-4 outline-none border-none overflow-hidden rounded-md shadow ${(typeof id == 'undefined') && 'hidden'}`}
-              defaultValue={ note?.body }
+              defaultValue={ note.body }
             >
             </textarea>
           </>

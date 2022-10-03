@@ -7,7 +7,7 @@ interface ListItemProps {
   id: number
   body: string
   updated: Date
-  selectedNote: (id: number) => number
+  selectedNote: (id: number) => void
 }
 
 export const ListItem = ({ id, body, updated, selectedNote }: ListItemProps) => {

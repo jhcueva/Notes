@@ -28,7 +28,7 @@ services:
       context: ./frontend/
       dockerfile: Dockerfile
     command: >
-      sh -c "npm run dev"
+      sh -c "npm run build && npm run dev"
     stdin_open: true
     ports:
       - "3000:3000"

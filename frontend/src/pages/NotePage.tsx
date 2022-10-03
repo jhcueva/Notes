@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import {useParams, useNavigate} from "react-router-dom"
-import { NoteInterface } from '../types'
+import { NotesInterface } from '../types'
 
 
 import { ReactComponent as BackIcon } from '../assets/back-icon.svg'
@@ -8,7 +8,7 @@ import { ReactComponent as DeleteIcon } from '../assets/delete-icon.svg'
 import { ReactComponent as DoneIcon } from '../assets/check-icon.svg'
 
 
-const Note: NoteInterface = {
+const Note: NotesInterface = {
   id: 0,
   body: "",
   updated: new Date,
@@ -26,7 +26,7 @@ export const NotePage = () => {
     setNote(note => ({ ...note, body:event.target.value}))
   }
 
-  const handleKey = (event) => {
+  const handleKey = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === 'Enter') {
       handleClick()
     }

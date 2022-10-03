@@ -3,7 +3,8 @@ import { NotesList } from './NotesList'
 import { Note } from './Note'
 import { getNotes } from '../hooks/getNote'
 import { ListItem } from '../components/ListItem'
-import {deleteNote} from '../hooks/noteCRUD'
+import { deleteNote } from '../hooks/noteCRUD'
+import { NotesInterface } from '../types'
 
 export const Home = () => {
   const [notes, setNotes] = useState([])
@@ -15,14 +16,14 @@ export const Home = () => {
     setSelectedNote(id)
   }
 
-  const handleDelete = (id) => {
+  const handleDelete = (id: number) => {
     setOnDeleteNote(id)
     setSelectedNote(undefined)
   }
 
   useEffect(() => {
     try {
-      deleteNote(ondeleteNote)
+      deleteNote(ondeleteNote as number)
         .then(() => setReload(prevState => !prevState))
     } catch (err) {
       console.log("Error: ", err)
