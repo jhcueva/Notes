@@ -11,3 +11,10 @@ export interface NoteInterface {
   content: string;
   date: string;
 }
+
+export interface FormInputInterface {
+  label: string;
+  name: string;
+  type: string;
+  placeholder: string;
+}

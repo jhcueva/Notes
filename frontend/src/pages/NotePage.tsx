@@ -4,7 +4,7 @@ import { NotesInterface } from '../types'
 
 
 import { ReactComponent as BackIcon } from '../assets/back-icon.svg'
-import { ReactComponent as DeleteIcon } from '../assets/delete-icon.svg'
+import { ReactComponent as DeleteIcon } from '../assets/trash-icon.svg'
 import { ReactComponent as DoneIcon } from '../assets/check-icon.svg'
 
 

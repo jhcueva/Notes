@@ -17,15 +17,12 @@ from pathlib import Path
 CURRENT_DIR = os.path.dirname(os.getcwd())
 BASE_DIR = Path(CURRENT_DIR).resolve().parent
 TEMPLATE_DIR = os.path.join(CURRENT_DIR, 'dist')
-print('--'*20)
-print(os.listdir(TEMPLATE_DIR))
-print('--'*20)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY', 'ombclg*klo$e1vwxp2=oez!o+e@5=#=*5xj*g@3ufar02^^+sd')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,6 +34,9 @@ ALLOWED_HOSTS.extend(
         os.environ.get('ALLOWED_HOSTS', '').split(','),
     )
 )
+# Users & Authentication
+
+AUTH_USER_MODEL = 'accounts.User'
 
 
 # Application definition
@@ -57,6 +57,7 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     'api.apps.ApiConfig',
+    'accounts.apps.AccountsConfig'
 ]
 
 MIDDLEWARE = [

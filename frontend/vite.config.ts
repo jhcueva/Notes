@@ -6,11 +6,12 @@ import svgr from 'vite-plugin-svgr'; // make sure to import it
 export default defineConfig({
   server: {
     proxy: {
-      "/api": {
+      "/v1": {
         target: "http://notesdocker-project-1:8000",
         changeOrigin: true,
         secure: false,
         ws: true,
+        rewrite: (path) => path.replace(/^\/v1/, ""),
       },
     },
     host: '0.0.0.0',
