@@ -1,34 +1,46 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from "react-router-dom"
+
 import { FormInput } from '../components/FormInput'
 import { CSRFToken } from '../components/CSRFToken'
-import { register } from '../hooks/register'
-import { useNavigate, Navigate } from "react-router-dom"
+import { useSignUp } from '../hooks/useSignUp'
 
+interface ErrorInterface {
+  email?: string;
+  username?: string;
+  password?: string;
+  non_field_errors?: string;
+}
+
+const responseError: ErrorInterface = {
+  email: "",
+  username: "",
+  password: "",
+  non_field_errors: "",
+}
 
 export const Register = () => {
   const navigate = useNavigate()
   const [formInput, setFormInput] = useState({})
   const [csrf, setCsrf] = useState('')
-  const [error, setError] = useState([])
+  const [error, setError] = useState(responseError)
 
   useEffect(() => {
-    console.log(csrf)
     if (csrf.length > 1) {
-      try{
-        register(formInput, csrf)
-          .then(res => setError(Object.keys(res).map(key => res[key])))
-          .then(() => {
-            if (error[0] === 201) {
-              <Navigate replace to="/login" />
-              navigate("/")
-            }
-          })
+      try {
+        useSignUp(formInput, csrf)
+          .then((response) => { setError(response) })
       } catch (err) {
         console.log("Error: ", err)
       }
     }
-    console.log("Form input: ",formInput)
   }, [formInput])
+
+  useEffect(() => {
+    if (error === 201) {
+      navigate('/login')
+    }
+  }, [error])
 
 
   const handleSubmit = (event) => {
@@ -44,26 +56,20 @@ export const Register = () => {
   return (
     <section className='container h-screen mx-auto grid place-content-center'>
       <section className='bg-slate-100 p-5 rounded-md'>
-        { error.length >= 1 ?
-          <p className='text-center'>{error}</p>
-          : ""
-        }
-        <form 
+        <form
           action="POST"
           onSubmit={handleSubmit}
           className='mb-6'
-          >
+        >
           <CSRFToken />
-          <FormInput name="email" placeholder='Email' label='Email' type='email'/>
-          <FormInput name="username" placeholder='Username' label='Username' type='text'/>
-          <FormInput name="first_name" placeholder='First Name' label='First Name' type='text'/>
-          <FormInput name="last_name" placeholder='Last Name' label='Last Name' type='text' />
-          <FormInput name="password" placeholder='Password' label='Password' type='password'/>
-          <FormInput name="password_confirmation" placeholder='Confirm Password' label='Confirm Password' type='password' />
-          <button 
-            type='submit' 
+          <FormInput name="email" placeholder='Email' type='email' error={error['email']} />
+          <FormInput name="username" placeholder='Username' type='text' error={error['username']} />
+          <FormInput name="password" placeholder='Password' type='password' error={error['password']} />
+          <FormInput name="password_confirmation" placeholder='Confirm Password' type='password' error={error['non_field_errors']} />
+          <button
+            type='submit'
             className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center'>
-              Register
+            Register
           </button>
         </form>
       </section>

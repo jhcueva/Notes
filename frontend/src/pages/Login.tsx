@@ -1,45 +1,68 @@
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { FormInput } from '../components/FormInput'
+
+import { useLogin } from '../hooks/useLogin'
+import { CSRFToken } from '../components/CSRFToken'
+
+interface ErrorInterface {
+  non_field_errors?: string;
+}
+
+const responseError: ErrorInterface = {
+  non_field_errors: "",
+}
 
 export const Login = () => {
+  const navigate = useNavigate()
+  const [formInput, setFormInput] = useState({})
+  const [csrf, setCsrf] = useState('')
+  const [error, setError] = useState(responseError)
+  console.log(error)
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    const data = new FormData(event.target)
+    const formInputs = Object.fromEntries(data.entries())
+    const csrfToken = formInputs['csrfmiddlewaretoken']
+    delete formInputs['csrfmiddlewaretoken']
+    setFormInput(formInputs)
+    setCsrf(csrfToken as string)
+  }
+
+  useEffect(() => {
+    if (csrf.length > 1) {
+      try {
+        useLogin(formInput, csrf)
+          .then((response) => { setError(response) })
+      } catch (err) {
+        console.log("Error: ", err)
+      }
+    }
+  }, [formInput])
+
+  useEffect(() => {
+    if (error === 201) {
+      navigate('/')
+    }
+  }, [error])
+
   return (
     <section className='container h-screen mx-auto grid place-content-center'>
       <section className='bg-slate-100 p-5 rounded-md'>
-        <form 
+        <p className={`text-center rounded bg-red-300 text-red-700 mb-3 p-2 ${error['non_field_errors']?.length === 0 && 'hidden'}`}>{error['non_field_errors']}</p>
+        <form
           action="POST"
+          onSubmit={handleSubmit}
           className='mb-6'
-          >
-          <div className='mb-6'>
-            <label 
-              htmlFor="email" 
-              className='block mb-2 text-lg font-medium text-gray-900'
-            >
-              Email
-            </label>
-            <input 
-              type="email" 
-              className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5'
-              placeholder='Email'
-              required
-            />
-          </div>
-          <div className='mb-6'>
-            <label 
-              htmlFor="password" 
-              className='block mb-2 text-lg font-medium text-gray-900'
-            >
-              Password
-            </label>
-            <input 
-              type="password" 
-              className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5'
-              placeholder='Password'
-              required
-            />
-          </div>
-          <button 
-            type='submit' 
+        >
+          <CSRFToken />
+          <FormInput name='email' placeholder='Email' type='email' />
+          <FormInput name='password' placeholder='Password' type='password' />
+          <button
+            type='submit'
             className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center'>
-              Login
+            Login
           </button>
         </form>
         <hr className='mb-4'></hr>
@@ -47,7 +70,7 @@ export const Login = () => {
         <Link to='/register'>
           <p className='font-medium text-blue-600 text-center'>Create an account</p>
         </Link>
-        
+
       </section>
     </section>
   )

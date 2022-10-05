@@ -13,8 +13,8 @@ export interface NoteInterface {
 }
 
 export interface FormInputInterface {
-  label: string;
   name: string;
   type: string;
   placeholder: string;
+  error: string;
 }
