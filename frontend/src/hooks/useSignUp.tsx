@@ -1,5 +1,5 @@
 export const useSignUp = async (inputs, crsf) => {
-  const signupData = await fetch('/v1/account/users/signup/', {
+  const signupData = await fetch('/v1/accounts/signup/', {
     method: "POST",
     headers: {
       'Content-Type': 'application/json',

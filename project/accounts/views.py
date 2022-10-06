@@ -1,10 +1,19 @@
 from rest_framework import status, viewsets, mixins
 from rest_framework.decorators import action
 from rest_framework.response import Response
+
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect
 from django.utils.decorators import method_decorator
 
+from accounts.models import User
 
+# Permissions
+from rest_framework.permissions import (
+    AllowAny,
+    IsAuthenticated,
+)
+
+#Serializers
 from accounts.serializers import (
     UsersModelSerializer,
     UserLoginSerializer,
@@ -18,6 +27,21 @@ class UsersViewSet(mixins.RetrieveModelMixin,
 
     Handle sign up, login
     """
+    
+    queryset = User.objects.all()
+    serializer_class = UsersModelSerializer
+    lookup_field = 'email'
+    
+    def get_permissions(self):
+        """Assign permissions based on actions"""
+
+        if self.action in ['signup', 'login', 'csrf']:
+            permissions = [AllowAny]
+        else:
+            permissions = [IsAuthenticated]
+        
+        return [permission() for permission in permissions]
+    
     @method_decorator(csrf_protect, name='dispatch')
     @action(detail=False, methods=['post'])
     def login(self, request):

@@ -1,5 +1,5 @@
 export const useLogin = async (formInputs, csrf) => {
-  const loginData = await fetch('/v1/account/users/login/', {
+  const loginData = await fetch('/v1/accounts/login/', {
     method: "POST",
     headers: {
       'Content-Type': 'application/json',

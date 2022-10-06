@@ -1,5 +1,5 @@
 export const getCSRF = async () => {
-  const response = await fetch('/v1/account/users/csrf/', {
+  return fetch('/v1/accounts/csrf/', {
     method: 'GET'
   })
 }
