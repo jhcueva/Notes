@@ -60,14 +60,14 @@ export const NotePage = () => {
   const getNote = async () => {
     if (id === 'new') return
 
-    const response = await fetch(`/v1/api/notes/${id}/`)
+    const response = await fetch(`/v1/api/${id}/note/`)
     const data = await response.json()
     console.log(data.body)
     setNote(data)
   }
 
   const createNote = async () => {
-    fetch(`/v1/api/createNote/`, {
+    fetch(`/v1/api/newnote/`, {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
@@ -78,7 +78,7 @@ export const NotePage = () => {
   }
 
   const updateNote = async () => {
-    fetch(`/v1/api/notes/${id}/`, {
+    fetch(`/v1/api/${id}/note/`, {
       method: "PUT",
       headers: {
         'Content-Type': 'application/json'

@@ -9,6 +9,9 @@ from .models import Note
 class NoteSerializer(serializers.ModelSerializer):
     """Note serializer"""
 
+    # id = serializers.IntegerField()
+    body = serializers.CharField(min_length=2, max_length=None, allow_blank=False)
+
     class Meta:
         model = Note
         fields = '__all__'

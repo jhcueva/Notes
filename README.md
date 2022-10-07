@@ -35,3 +35,7 @@ Start all image containers
 
     docker compose up
 
+Stop all image containers
+
+    docker compose down
+

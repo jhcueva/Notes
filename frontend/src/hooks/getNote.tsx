@@ -16,7 +16,7 @@ export const getNotes = async () => {
 
 export const getNote = async (id: number) => {
   if (typeof id == 'number') {
-    const response = await fetch(`/v1/api/notes/${id}/`)
+    const response = await fetch(`/v1/api/${id}/note/`)
     const data = await response.json()
     return (data)
   }
