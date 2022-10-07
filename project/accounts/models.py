@@ -1,9 +1,27 @@
-from email.policy import default
-from enum import unique
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, UserManager
 
 # Create your models here.
+
+class CustomUserManager(UserManager):
+    """Custom user manager"""
+    
+    def create_user(self, email, password=None):
+        """
+        Creates and saves a User with the given email, date of
+        birth and password.
+        """
+        if not email:
+            raise ValueError('Users must have an email address')
+        
+        user = self.model(
+            email=self.normalize_email(email),
+        )
+        
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
 
 
 class User(AbstractUser):
@@ -21,21 +39,17 @@ class User(AbstractUser):
         }
     )
     
+    username = None
+    
+    objects = CustomUserManager()
+    
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']
-
-    is_verified = models.BooleanField(
-        'verified',
-        default=False,
-        help_text=(
-            'Set to true when the user verifies the email'
-        )
-    )
+    REQUIRED_FIELDS = []
     
     def __str__(self):
         """Return the username"""
-        return self.username
+        return self.email
     
     def get_short_name(self):
         """Return username"""
-        return self.username
+        return self.email

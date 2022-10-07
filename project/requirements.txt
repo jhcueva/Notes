@@ -6,6 +6,7 @@ sqlparse==0.4.2
 toml==0.10.2
 asgiref==3.5.2
 autopep8==1.7.0
+djangorestframework-simplejwt==5.2.1
 
 # Django
 django==3.2.3

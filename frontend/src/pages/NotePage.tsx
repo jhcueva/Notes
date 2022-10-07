@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import {useParams, useNavigate} from "react-router-dom"
 import { NotesInterface } from '../types'
-
+import Cookies from 'js-cookie'
 
 import { ReactComponent as BackIcon } from '../assets/back-icon.svg'
 import { ReactComponent as DeleteIcon } from '../assets/trash-icon.svg'
@@ -60,24 +60,25 @@ export const NotePage = () => {
   const getNote = async () => {
     if (id === 'new') return
 
-    const response = await fetch(`/api/notes/${id}/`)
+    const response = await fetch(`/v1/api/notes/${id}/`)
     const data = await response.json()
     console.log(data.body)
     setNote(data)
   }
 
   const createNote = async () => {
-    fetch(`/api/notes/`, {
+    fetch(`/v1/api/createNote/`, {
       method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + Cookies.get('access')
       },
       body: JSON.stringify(note)
     })
   }
 
   const updateNote = async () => {
-    fetch(`/api/notes/${id}/`, {
+    fetch(`/v1/api/notes/${id}/`, {
       method: "PUT",
       headers: {
         'Content-Type': 'application/json'

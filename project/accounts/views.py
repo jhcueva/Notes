@@ -64,6 +64,12 @@ class UsersViewSet(mixins.RetrieveModelMixin,
         data = UsersModelSerializer(user).data
 
         return Response(data, status=status.HTTP_201_CREATED)
+    
+    def retrieve(self, request, *args, **kwargs):
+        user = request.user
+        user = UsersModelSerializer(user)
+        
+        return Response(user.data, status=status.HTTP_200_OK)
         
     @method_decorator(ensure_csrf_cookie, name='dispatch')        
     @action(detail=False, methods=['get'])

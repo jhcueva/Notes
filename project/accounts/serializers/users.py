@@ -21,12 +21,7 @@ class UsersModelSerializer(serializers.ModelSerializer):
         """Meta class"""
 
         model = User
-        fields = (
-            'username',
-            'first_name',
-            'last_name',
-            'email'
-        )
+        fields = ('email',)
         
 
 class UserLoginSerializer(serializers.Serializer):
@@ -63,11 +58,11 @@ class UserSignUpSerializer(serializers.Serializer):
         validators=[UniqueValidator(queryset=User.objects.all())]
     )
     
-    username = serializers.CharField(
-        min_length=4,
-        max_length=20,
-        validators=[UniqueValidator(queryset=User.objects.all())]
-    )
+    # username = serializers.CharField(
+    #     min_length=4,
+    #     max_length=20,
+    #     validators=[UniqueValidator(queryset=User.objects.all())]
+    # )
     
     #Password
     password = serializers.CharField(min_length=8, max_length=40)    
@@ -89,6 +84,6 @@ class UserSignUpSerializer(serializers.Serializer):
     def create(self, data):
         """Handle user creation"""
         data.pop('password_confirmation')
-        user = User.objects.create_user(**data, is_verified= False)
+        user = User.objects.create_user(**data)
         return user
         

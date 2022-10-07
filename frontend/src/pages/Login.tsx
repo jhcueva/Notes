@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { FormInput } from '../components/FormInput'
 
 import { useLogin } from '../hooks/useLogin'
+import { getJWT } from '../hooks/getJWT'
 import { CSRFToken } from '../components/CSRFToken'
 
 interface ErrorInterface {
@@ -15,10 +16,10 @@ const responseError: ErrorInterface = {
 
 export const Login = () => {
   const navigate = useNavigate()
+
   const [formInput, setFormInput] = useState({})
   const [csrf, setCsrf] = useState('')
   const [error, setError] = useState(responseError)
-  console.log(error)
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -43,6 +44,7 @@ export const Login = () => {
 
   useEffect(() => {
     if (error === 201) {
+      getJWT(formInput)
       navigate('/')
     }
   }, [error])
