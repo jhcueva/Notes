@@ -1,10 +1,14 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+
 import { FormInput } from '../components/FormInput'
+import { CSRFToken } from '../components/CSRFToken'
 
 import { useLogin } from '../hooks/useLogin'
 import { getJWT } from '../hooks/getJWT'
-import { CSRFToken } from '../components/CSRFToken'
+
+import { setAuthentication } from '../actions/index'
 
 interface ErrorInterface {
   non_field_errors?: string;
@@ -16,6 +20,9 @@ const responseError: ErrorInterface = {
 
 export const Login = () => {
   const navigate = useNavigate()
+
+  const isAuthenticated = useSelector(state => state.isAuthenticated)
+  const dispatch = useDispatch()
 
   const [formInput, setFormInput] = useState({})
   const [csrf, setCsrf] = useState('')
@@ -45,6 +52,7 @@ export const Login = () => {
   useEffect(() => {
     if (error === 201) {
       getJWT(formInput)
+      dispatch(setAuthentication(true))
       navigate('/')
     }
   }, [error])

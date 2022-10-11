@@ -1,6 +1,10 @@
 from rest_framework import status, viewsets, mixins
+from rest_framework import generics
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.views import APIView
+from rest_framework.generics import GenericAPIView
 
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect
 from django.utils.decorators import method_decorator
@@ -64,6 +68,16 @@ class UsersViewSet(mixins.RetrieveModelMixin,
         data = UsersModelSerializer(user).data
 
         return Response(data, status=status.HTTP_201_CREATED)
+
+    # @action(detail=False, methods=['post'])
+    # def blacklistjwt(self, request):
+    #     try:
+    #         token = RefreshToken(request.data['refresh_token'])
+    #         token.blacklist()
+    #         return Response ("Success", status=status.HTTP_200_OK)
+    #     except Exception as e:
+    #         return Response(status=status.HTTP_400_BAD_REQUEST)
+        
     
     def retrieve(self, request, *args, **kwargs):
         user = request.user
@@ -75,3 +89,9 @@ class UsersViewSet(mixins.RetrieveModelMixin,
     @action(detail=False, methods=['get'])
     def csrf(self, request):
         return Response({ 'success': 'CSRF cookie set'})
+    
+# class BlacklistRefreshView(APIView):
+#     def post(self, request):
+#         token = RefreshToken(request.data.get('refresh'))
+#         token.blacklist()
+#         return Response("Success")

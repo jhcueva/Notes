@@ -1,4 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
+import { Link } from 'react-router-dom'
+
+import { UserBtn } from '../components/UserBtn'
+
 import { NotesInterface } from '../types'
 
 import { getNote } from '../hooks/getNote'
@@ -25,8 +29,14 @@ export const Note = ({ id, onDeleteNote }: NoteProps) => {
 
   const [note, setNote] = useState<NotesInterface>(expectedNote)
 
+  const userMenu = useRef()
+
   const handleDelete = () => {
     onDeleteNote(id as number)
+  }
+
+  const handleMenuClick = () => {
+    userMenu.current.classList.toggle('hidden')
   }
 
   useEffect(() => {
@@ -42,6 +52,11 @@ export const Note = ({ id, onDeleteNote }: NoteProps) => {
 
   return (
     <section className='notePage h-full flex flex-col py-4 px-3'>
+
+      <section className='flex justify-end pb-3'>
+        <UserBtn /> 
+      </section>
+
       {
         typeof id == 'undefined'
           ?
@@ -74,7 +89,7 @@ export const Note = ({ id, onDeleteNote }: NoteProps) => {
                 </button>
               </section>
               <section className='py-2 px-4 bg-white rounded-b-lg'>
-                <label for="editor" class="sr-only">Publish post</label>
+                <label htmlFor="editor" className="sr-only">Publish post</label>
                 <textarea
                   key={note.body}
                   autoFocus

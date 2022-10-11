@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
+
 import { NotesList } from './NotesList'
 import { Note } from './Note'
 import { getNotes } from '../hooks/getNote'
@@ -6,7 +8,13 @@ import { ListItem } from '../components/ListItem'
 import { deleteNote } from '../hooks/noteCRUD'
 import { NotesInterface } from '../types'
 
+
 export const Home = () => {
+  const isAuthenticated = useSelector(state => state.isAuthenticated)
+
+  console.log(isAuthenticated)
+
+
   const [notes, setNotes] = useState([])
   const [selectedNote, setSelectedNote] = useState<number>()
   const [ondeleteNote, setOnDeleteNote] = useState<number>()

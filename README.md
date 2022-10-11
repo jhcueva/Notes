@@ -37,5 +37,5 @@ Start all image containers
 
 Stop all image containers
 
-    docker compose down
+    docker compose **down**
 

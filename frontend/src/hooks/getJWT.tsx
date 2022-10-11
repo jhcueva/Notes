@@ -11,8 +11,6 @@ export const getJWT = async (userData: {}) => {
 
   const jwt = await jwtResponse.json()
 
-  console.log(jwt)
-
   if (jwtResponse.status === 200){
     Cookies.set('access', jwt.access, {
       expires: 1,

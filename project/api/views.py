@@ -2,6 +2,8 @@ from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework import status, viewsets, mixins
 from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework_simplejwt.tokens import RefreshToken
+
 
 from django.shortcuts import get_object_or_404
 
@@ -28,7 +30,7 @@ class NotesViewSet(mixins.CreateModelMixin,
         """Assign permissions"""
 
         # permissions = [IsAuthenticated]
-        if self.action in ['note']:
+        if self.action in ['note', 'blacklistjwt']:
             permissions = [AllowAny]
         else:
             permissions = [IsAuthenticated]
@@ -79,6 +81,15 @@ class NotesViewSet(mixins.CreateModelMixin,
             note.delete()
 
             return Response('Note deleted', status=status.HTTP_200_OK)
+        
+    @action(detail=False, methods=['post'])
+    def blacklistjwt(self, request):
+        try:
+            token = RefreshToken(request.data['refresh_token'])
+            token.blacklist()
+            return Response ("Success", status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response("Error", status=status.HTTP_400_BAD_REQUEST)
 
 
 # @api_view(['GET', 'POST'])
