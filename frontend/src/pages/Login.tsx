@@ -21,7 +21,6 @@ const responseError: ErrorInterface = {
 export const Login = () => {
   const navigate = useNavigate()
 
-  const isAuthenticated = useSelector(state => state.isAuthenticated)
   const dispatch = useDispatch()
 
   const [formInput, setFormInput] = useState({})

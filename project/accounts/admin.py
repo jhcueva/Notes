@@ -9,7 +9,7 @@ from accounts.models import User
 class CustomUserAdmin(UserAdmin):
     """User model admin"""
 
-    list_display = ('id', 'email')
+    list_display = ('id', 'email', 'username')
     ordering = ('email',)
     
 admin.site.register(User, CustomUserAdmin)

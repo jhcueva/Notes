@@ -4,8 +4,9 @@ from rest_framework import status, viewsets, mixins
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
 
-
 from django.shortcuts import get_object_or_404
+
+from accounts.models import User
 
 from .models import Note
 
@@ -40,10 +41,9 @@ class NotesViewSet(mixins.CreateModelMixin,
     @action(detail=False, methods=['post'])
     def newnote(self, request):
         """Create note"""
-
-        serializers = NoteCreateSerializer(data=request.data)
+        serializers = NoteCreateSerializer(data=request.data, context={'request': request})
         serializers.is_valid(raise_exception=True)
-        note = serializers.save()
+        note = serializers.save(user=self.request.user)
         data = NoteSerializer(note).data
 
         return Response(data, status=status.HTTP_201_CREATED)
@@ -51,8 +51,8 @@ class NotesViewSet(mixins.CreateModelMixin,
     @action(detail=False, methods=['get'])
     def notes(self, request):
         """Get notes"""
-
-        notes = Note.objects.all().order_by('-updated')
+        user = request.user
+        notes = Note.objects.all().filter(user=user).order_by('-updated')
         serializer = NoteSerializer(notes, many=True)
 
         return Response(serializer.data, status=status.HTTP_200_OK)

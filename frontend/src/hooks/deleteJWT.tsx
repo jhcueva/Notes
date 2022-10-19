@@ -9,8 +9,4 @@ export const deleteJWT = async () => {
     },
     body: JSON.stringify({ refresh_token: `${Cookies.get('refresh')}` })
   })
-
-  console.log("Token: ", { 'refresh_token': `${Cookies.get('refresh')}` })
-  console.log("Logout: ", jwtResponse)
-  console.log("Logout status: ", jwtResponse.status)
 }

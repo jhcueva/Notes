@@ -13,7 +13,7 @@ export const NotesList = (props: NoteListProps) => {
       <h2 className='text-3xl font-medium'>Note List</h2>
       <section className='Notes h-full flex flex-col gap-4 overflow-y-hidden overflow-y-scroll scrollbar-hide'>
         {
-          props.notes.length === 0 
+          props.notes.length === 0 || props.notes.length === undefined
           ? < NoNotes />
           : props.notes.map(props.children)
         }

@@ -19,6 +19,7 @@ export const UserBtn = () => {
   }
 
   const handleMenuClick = () => {
+    // userMenu.current.classList.toggle('hidden')
     userMenu.current.classList.toggle('hidden')
   }
 

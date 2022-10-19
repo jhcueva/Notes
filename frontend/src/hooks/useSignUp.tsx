@@ -10,6 +10,7 @@ export const useSignUp = async (inputs, crsf) => {
   const response = await signupData.json()
 
   if (signupData.status !== 201) {
+    console.log(signupData.status)
     return response
   } else {
     return signupData.status

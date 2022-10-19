@@ -64,7 +64,7 @@ export const Register = () => {
         >
           <CSRFToken />
           <FormInput name="email" placeholder='Email' type='email' error={error['email']} />
-          {/* <FormInput name="username" placeholder='Username' type='text' error={error['username']} /> */}
+          <FormInput name="username" placeholder='Username' type='text' error={error['username']} />
           <FormInput name="password" placeholder='Password' type='password' error={error['password']} />
           <FormInput name="password_confirmation" placeholder='Confirm Password' type='password' error={error['non_field_errors']} />
           <button

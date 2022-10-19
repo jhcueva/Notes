@@ -38,7 +38,7 @@ ALLOWED_HOSTS.extend(
 # Users & Authentication
 
 AUTH_USER_MODEL = 'accounts.User'
-ACCOUNT_USER_MODEL_USERNAME_FIELD = 'email'
+# ACCOUNT_USER_MODEL_USERNAME_FIELD = 'email'
 
 #JWT Configuration
 SIMPLE_JWT = {

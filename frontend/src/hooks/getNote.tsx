@@ -9,8 +9,6 @@ export const getNotes = async () => {
     },
   })
   const data = await response.json()
-  console.log("Data ALL: ", data)
-  console.log("Cookie", Cookies.get('access'))
   return data
 }
 

@@ -21,7 +21,7 @@ class UsersModelSerializer(serializers.ModelSerializer):
         """Meta class"""
 
         model = User
-        fields = ('email',)
+        fields = '__all__'
         
 
 class UserLoginSerializer(serializers.Serializer):
@@ -58,11 +58,11 @@ class UserSignUpSerializer(serializers.Serializer):
         validators=[UniqueValidator(queryset=User.objects.all())]
     )
     
-    # username = serializers.CharField(
-    #     min_length=4,
-    #     max_length=20,
-    #     validators=[UniqueValidator(queryset=User.objects.all())]
-    # )
+    username = serializers.CharField(
+        min_length=4,
+        max_length=20,
+        validators=[UniqueValidator(queryset=User.objects.all())]
+    )
     
     #Password
     password = serializers.CharField(min_length=8, max_length=40)    
